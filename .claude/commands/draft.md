@@ -5,16 +5,18 @@ description: Draft metadata for a contract address based on Etherscan API data
 
 ## TL;DR
 
-Draft metadata per the ERC-7730 standard for a specific contract on the Ethereum blockchain.
+Draft metadata per the ERC-7730 standard for a specific contract on an EVM blockchain.
 
 ## Context
 
-- The contract address is passed by the user: $ARGUMENTS
+- The user passes $ARGUMENTS which are structured as {chain_id}:{contract_address}
 - The Etherscan API key token (`YourApiKeyToken`) can be found in the environment variable $ETHERSCAN_API_KEY (see `.env` first)
 - Some valuable Etherscan API endpoints:
-  - Get contract ABI: https://api.etherscan.io/v2/api?chainid=1&module=contract&action=getabi&address=ContractAddress&apikey=YourApiKeyToken
-  - Get contract source code: https://api.etherscan.io/v2/api?chainid=1&module=contract&action=getsourcecode&address=ContractAddress&apikey=YourApiKeyToken
+  - Get contract ABI: https://api.etherscan.io/v2/api?chainid={chain_id}&module=contract&action=getabi&address={contract_address}&apikey={etherscan_api_key}
+  - Get contract source code: https://api.etherscan.io/v2/api?chainid={chain_id}&module=contract&action=getsourcecode&address={contract_address}&apikey={etherscan_api_key}
+  - the V2 of the API can handle other chains as well; no need to change the domain, only the chainid variable
 - The `erc7730` package can be accessed in the virtual environment through !`pipenv`
+- More relevant data for a particular chain (eg name or symbol) can be retrieved from https://github.com/ethereum-lists/chains/tree/master/_data/chains
 
 ## Tasks
 
