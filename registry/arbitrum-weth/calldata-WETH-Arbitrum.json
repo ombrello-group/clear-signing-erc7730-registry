@@ -1,0 +1,178 @@
+{
+  "$schema": "../../specs/erc7730-v1.schema.json",
+  "context": {
+    "$id": "WETH-Arbitrum",
+    "contract": {
+      "deployments": [{ "chainId": 42161, "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1" }],
+      "abi": [
+        {
+          "inputs": [
+            { "internalType": "address", "name": "spender", "type": "address" },
+            { "internalType": "uint256", "name": "amount", "type": "uint256" }
+          ],
+          "name": "approve",
+          "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        { "inputs": [], "name": "deposit", "outputs": [], "stateMutability": "payable", "type": "function" },
+        {
+          "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+          "name": "depositTo",
+          "outputs": [],
+          "stateMutability": "payable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            { "internalType": "address", "name": "recipient", "type": "address" },
+            { "internalType": "uint256", "name": "amount", "type": "uint256" }
+          ],
+          "name": "transfer",
+          "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            { "internalType": "address", "name": "sender", "type": "address" },
+            { "internalType": "address", "name": "recipient", "type": "address" },
+            { "internalType": "uint256", "name": "amount", "type": "uint256" }
+          ],
+          "name": "transferFrom",
+          "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
+          "name": "withdraw",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            { "internalType": "address", "name": "account", "type": "address" },
+            { "internalType": "uint256", "name": "amount", "type": "uint256" }
+          ],
+          "name": "withdrawTo",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "owner": "Arbitrum",
+    "info": { "legalName": "Arbitrum Wrapped Ether", "url": "https://arbitrum.io" },
+    "constants": { "wethAddress": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1" }
+  },
+  "display": {
+    "formats": {
+      "approve(address,uint256)": {
+        "intent": "authorize WETH spending",
+        "fields": [
+          {
+            "label": "Spender",
+            "format": "addressName",
+            "params": { "types": ["contract"], "sources": ["local"] },
+            "path": "#.spender"
+          },
+          { "label": "Amount", "format": "tokenAmount", "path": "#.amount", "params": { "token": "$.metadata.constants.wethAddress" } }
+        ],
+        "required": ["#.spender", "#.amount"],
+        "excluded": []
+      },
+      "transfer(address,uint256)": {
+        "intent": "transfer WETH",
+        "fields": [
+          {
+            "label": "Recipient",
+            "format": "addressName",
+            "params": { "types": ["eoa", "wallet"], "sources": ["local", "ens"] },
+            "path": "#.recipient"
+          },
+          { "label": "Amount", "format": "tokenAmount", "path": "#.amount", "params": { "token": "$.metadata.constants.wethAddress" } }
+        ],
+        "required": ["#.recipient", "#.amount"],
+        "excluded": []
+      },
+      "transferFrom(address,address,uint256)": {
+        "intent": "transfer WETH on behalf",
+        "fields": [
+          {
+            "label": "From",
+            "format": "addressName",
+            "params": { "types": ["eoa", "wallet", "contract"], "sources": ["local", "ens"] },
+            "path": "#.sender"
+          },
+          {
+            "label": "To",
+            "format": "addressName",
+            "params": { "types": ["eoa", "wallet", "contract"], "sources": ["local", "ens"] },
+            "path": "#.recipient"
+          },
+          { "label": "Amount", "format": "tokenAmount", "path": "#.amount", "params": { "token": "$.metadata.constants.wethAddress" } }
+        ],
+        "required": ["#.sender", "#.recipient", "#.amount"],
+        "excluded": []
+      },
+      "deposit()": {
+        "intent": "wrap ETH to WETH",
+        "fields": [
+          {
+            "label": "Amount",
+            "format": "tokenAmount",
+            "path": "@.value",
+            "params": { "nativeCurrencyAddress": "0x0000000000000000000000000000000000000000" }
+          }
+        ],
+        "required": ["@.value"],
+        "excluded": []
+      },
+      "depositTo(address)": {
+        "intent": "wrap ETH to WETH for recipient",
+        "fields": [
+          {
+            "label": "Recipient",
+            "format": "addressName",
+            "params": { "types": ["eoa", "wallet", "contract"], "sources": ["local", "ens"] },
+            "path": "#.account"
+          },
+          {
+            "label": "Amount",
+            "format": "tokenAmount",
+            "path": "@.value",
+            "params": { "nativeCurrencyAddress": "0x0000000000000000000000000000000000000000" }
+          }
+        ],
+        "required": ["#.account", "@.value"],
+        "excluded": []
+      },
+      "withdraw(uint256)": {
+        "intent": "unwrap WETH to ETH",
+        "fields": [
+          { "label": "Amount", "format": "tokenAmount", "path": "#.amount", "params": { "token": "$.metadata.constants.wethAddress" } }
+        ],
+        "required": ["#.amount"],
+        "excluded": []
+      },
+      "withdrawTo(address,uint256)": {
+        "intent": "unwrap WETH to ETH for recipient",
+        "fields": [
+          {
+            "label": "Recipient",
+            "format": "addressName",
+            "params": { "types": ["eoa", "wallet", "contract"], "sources": ["local", "ens"] },
+            "path": "#.account"
+          },
+          { "label": "Amount", "format": "tokenAmount", "path": "#.amount", "params": { "token": "$.metadata.constants.wethAddress" } }
+        ],
+        "required": ["#.account", "#.amount"],
+        "excluded": []
+      }
+    }
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "$schema": "../../specs/erc7730-v1.schema.json",
+  "context": {
+    "$id": "WETH9",
+    "contract": {
+      "deployments": [{ "chainId": 1, "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" }],
+      "abi": [
+        {
+          "type": "function",
+          "name": "name",
+          "inputs": [],
+          "outputs": [{ "name": "", "type": "string" }],
+          "stateMutability": "view",
+          "constant": true,
+          "payable": false
+        },
+        {
+          "type": "function",
+          "name": "approve",
+          "inputs": [{ "name": "guy", "type": "address" }, { "name": "wad", "type": "uint256" }],
+          "outputs": [{ "name": "", "type": "bool" }],
+          "stateMutability": "nonpayable",
+          "constant": false,
+          "payable": false
+        },
+        {
+          "type": "function",
+          "name": "totalSupply",
+          "inputs": [],
+          "outputs": [{ "name": "", "type": "uint256" }],
+          "stateMutability": "view",
+          "constant": true,
+          "payable": false
+        },
+        {
+          "type": "function",
+          "name": "transferFrom",
+          "inputs": [{ "name": "src", "type": "address" }, { "name": "dst", "type": "address" }, { "name": "wad", "type": "uint256" }],
+          "outputs": [{ "name": "", "type": "bool" }],
+          "stateMutability": "nonpayable",
+          "constant": false,
+          "payable": false
+        },
+        {
+          "type": "function",
+          "name": "withdraw",
+          "inputs": [{ "name": "wad", "type": "uint256" }],
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "constant": false,
+          "payable": false
+        },
+        {
+          "type": "function",
+          "name": "decimals",
+          "inputs": [],
+          "outputs": [{ "name": "", "type": "uint8" }],
+          "stateMutability": "view",
+          "constant": true,
+          "payable": false
+        },
+        {
+          "type": "function",
+          "name": "balanceOf",
+          "inputs": [{ "name": "", "type": "address" }],
+          "outputs": [{ "name": "", "type": "uint256" }],
+          "stateMutability": "view",
+          "constant": true,
+          "payable": false
+        },
+        {
+          "type": "function",
+          "name": "symbol",
+          "inputs": [],
+          "outputs": [{ "name": "", "type": "string" }],
+          "stateMutability": "view",
+          "constant": true,
+          "payable": false
+        },
+        {
+          "type": "function",
+          "name": "transfer",
+          "inputs": [{ "name": "dst", "type": "address" }, { "name": "wad", "type": "uint256" }],
+          "outputs": [{ "name": "", "type": "bool" }],
+          "stateMutability": "nonpayable",
+          "constant": false,
+          "payable": false
+        },
+        {
+          "type": "function",
+          "name": "deposit",
+          "inputs": [],
+          "outputs": [],
+          "stateMutability": "payable",
+          "constant": false,
+          "payable": true
+        },
+        {
+          "type": "function",
+          "name": "allowance",
+          "inputs": [{ "name": "", "type": "address" }, { "name": "", "type": "address" }],
+          "outputs": [{ "name": "", "type": "uint256" }],
+          "stateMutability": "view",
+          "constant": true,
+          "payable": false
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "owner": "WETH9",
+    "info": { "legalName": "Wrapped Ether", "url": "https://weth.io" },
+    "constants": { "wethAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" }
+  },
+  "display": {
+    "formats": {
+      "approve(address,uint256)": {
+        "intent": "authorize WETH spending",
+        "fields": [
+          { "label": "Spender", "format": "addressName", "params": { "types": ["contract"], "sources": ["local"] }, "path": "#.guy" },
+          { "label": "Amount", "format": "tokenAmount", "path": "#.wad", "params": { "token": "$.metadata.constants.wethAddress" } }
+        ],
+        "required": ["#.guy", "#.wad"],
+        "excluded": []
+      },
+      "transfer(address,uint256)": {
+        "intent": "transfer WETH",
+        "fields": [
+          {
+            "label": "Recipient",
+            "format": "addressName",
+            "params": { "types": ["eoa", "wallet"], "sources": ["local", "ens"] },
+            "path": "#.dst"
+          },
+          { "label": "Amount", "format": "tokenAmount", "path": "#.wad", "params": { "token": "$.metadata.constants.wethAddress" } }
+        ],
+        "required": ["#.dst", "#.wad"],
+        "excluded": []
+      },
+      "transferFrom(address,address,uint256)": {
+        "intent": "transfer WETH on behalf",
+        "fields": [
+          {
+            "label": "From",
+            "format": "addressName",
+            "params": { "types": ["eoa", "wallet", "contract"], "sources": ["local", "ens"] },
+            "path": "#.src"
+          },
+          {
+            "label": "To",
+            "format": "addressName",
+            "params": { "types": ["eoa", "wallet", "contract"], "sources": ["local", "ens"] },
+            "path": "#.dst"
+          },
+          { "label": "Amount", "format": "tokenAmount", "path": "#.wad", "params": { "token": "$.metadata.constants.wethAddress" } }
+        ],
+        "required": ["#.src", "#.dst", "#.wad"],
+        "excluded": []
+      },
+      "deposit()": {
+        "intent": "wrap ETH to WETH",
+        "fields": [
+          {
+            "label": "Amount",
+            "format": "tokenAmount",
+            "path": "@.value",
+            "params": { "nativeCurrencyAddress": "0x0000000000000000000000000000000000000000" }
+          }
+        ],
+        "required": ["@.value"],
+        "excluded": []
+      },
+      "withdraw(uint256)": {
+        "intent": "unwrap WETH to ETH",
+        "fields": [{ "label": "Amount", "format": "tokenAmount", "path": "#.wad", "params": { "token": "$.metadata.constants.wethAddress" } }],
+        "required": ["#.wad"],
+        "excluded": []
+      }
+    }
+  }
+}
