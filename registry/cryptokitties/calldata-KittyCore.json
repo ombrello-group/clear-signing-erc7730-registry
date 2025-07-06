@@ -1,0 +1,251 @@
+{
+  "$schema": "../../specs/erc7730-v1.schema.json",
+  "context": {
+    "$id": "CryptoKitties",
+    "contract": {
+      "deployments": [{ "chainId": 1, "address": "0x06012c8cf97BEaD5deAe237070F9587f8E7A266d" }],
+      "abi": [
+        {
+          "type": "function",
+          "name": "approve",
+          "inputs": [{ "name": "_to", "type": "address" }, { "name": "_tokenId", "type": "uint256" }],
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "constant": false,
+          "payable": false
+        },
+        {
+          "type": "function",
+          "name": "transferFrom",
+          "inputs": [{ "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_tokenId", "type": "uint256" }],
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "constant": false,
+          "payable": false
+        },
+        {
+          "type": "function",
+          "name": "transfer",
+          "inputs": [{ "name": "_to", "type": "address" }, { "name": "_tokenId", "type": "uint256" }],
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "constant": false,
+          "payable": false
+        },
+        {
+          "type": "function",
+          "name": "createSaleAuction",
+          "inputs": [
+            { "name": "_kittyId", "type": "uint256" },
+            { "name": "_startingPrice", "type": "uint256" },
+            { "name": "_endingPrice", "type": "uint256" },
+            { "name": "_duration", "type": "uint256" }
+          ],
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "constant": false,
+          "payable": false
+        },
+        {
+          "type": "function",
+          "name": "createSiringAuction",
+          "inputs": [
+            { "name": "_kittyId", "type": "uint256" },
+            { "name": "_startingPrice", "type": "uint256" },
+            { "name": "_endingPrice", "type": "uint256" },
+            { "name": "_duration", "type": "uint256" }
+          ],
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "constant": false,
+          "payable": false
+        },
+        {
+          "type": "function",
+          "name": "approveSiring",
+          "inputs": [{ "name": "_addr", "type": "address" }, { "name": "_sireId", "type": "uint256" }],
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "constant": false,
+          "payable": false
+        },
+        {
+          "type": "function",
+          "name": "bidOnSiringAuction",
+          "inputs": [{ "name": "_sireId", "type": "uint256" }, { "name": "_matronId", "type": "uint256" }],
+          "outputs": [],
+          "stateMutability": "payable",
+          "constant": false,
+          "payable": true
+        },
+        {
+          "type": "function",
+          "name": "breedWithAuto",
+          "inputs": [{ "name": "_matronId", "type": "uint256" }, { "name": "_sireId", "type": "uint256" }],
+          "outputs": [],
+          "stateMutability": "payable",
+          "constant": false,
+          "payable": true
+        },
+        {
+          "type": "function",
+          "name": "giveBirth",
+          "inputs": [{ "name": "_matronId", "type": "uint256" }],
+          "outputs": [{ "name": "", "type": "uint256" }],
+          "stateMutability": "nonpayable",
+          "constant": false,
+          "payable": false
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "owner": "CryptoKitties",
+    "info": { "legalName": "Dapper Labs", "url": "https://www.cryptokitties.co" },
+    "constants": { "contractAddress": "0x06012c8cf97BEaD5deAe237070F9587f8E7A266d" }
+  },
+  "display": {
+    "formats": {
+      "approve(address,uint256)": {
+        "intent": "approve CryptoKitty transfer",
+        "fields": [
+          {
+            "label": "Approved Address",
+            "format": "addressName",
+            "params": { "types": ["eoa", "wallet", "contract"], "sources": ["local", "ens"] },
+            "path": "#._to"
+          },
+          { "label": "Kitty ID", "format": "raw", "path": "#._tokenId" }
+        ],
+        "required": ["#._to", "#._tokenId"],
+        "excluded": []
+      },
+      "transfer(address,uint256)": {
+        "intent": "transfer CryptoKitty",
+        "fields": [
+          {
+            "label": "Recipient",
+            "format": "addressName",
+            "params": { "types": ["eoa", "wallet"], "sources": ["local", "ens"] },
+            "path": "#._to"
+          },
+          { "label": "Kitty ID", "format": "raw", "path": "#._tokenId" }
+        ],
+        "required": ["#._to", "#._tokenId"],
+        "excluded": []
+      },
+      "transferFrom(address,address,uint256)": {
+        "intent": "transfer CryptoKitty on behalf",
+        "fields": [
+          {
+            "label": "From",
+            "format": "addressName",
+            "params": { "types": ["eoa", "wallet"], "sources": ["local", "ens"] },
+            "path": "#._from"
+          },
+          {
+            "label": "To",
+            "format": "addressName",
+            "params": { "types": ["eoa", "wallet"], "sources": ["local", "ens"] },
+            "path": "#._to"
+          },
+          { "label": "Kitty ID", "format": "raw", "path": "#._tokenId" }
+        ],
+        "required": ["#._from", "#._to", "#._tokenId"],
+        "excluded": []
+      },
+      "createSaleAuction(uint256,uint256,uint256,uint256)": {
+        "intent": "list CryptoKitty for sale",
+        "fields": [
+          { "label": "Kitty ID", "format": "raw", "path": "#._kittyId" },
+          {
+            "label": "Starting Price",
+            "format": "tokenAmount",
+            "path": "#._startingPrice",
+            "params": { "nativeCurrencyAddress": "0x0000000000000000000000000000000000000000" }
+          },
+          {
+            "label": "Ending Price",
+            "format": "tokenAmount",
+            "path": "#._endingPrice",
+            "params": { "nativeCurrencyAddress": "0x0000000000000000000000000000000000000000" }
+          },
+          { "label": "Duration", "format": "duration", "path": "#._duration" }
+        ],
+        "required": ["#._kittyId", "#._startingPrice", "#._endingPrice", "#._duration"],
+        "excluded": []
+      },
+      "createSiringAuction(uint256,uint256,uint256,uint256)": {
+        "intent": "list CryptoKitty for breeding",
+        "fields": [
+          { "label": "Kitty ID", "format": "raw", "path": "#._kittyId" },
+          {
+            "label": "Starting Price",
+            "format": "tokenAmount",
+            "path": "#._startingPrice",
+            "params": { "nativeCurrencyAddress": "0x0000000000000000000000000000000000000000" }
+          },
+          {
+            "label": "Ending Price",
+            "format": "tokenAmount",
+            "path": "#._endingPrice",
+            "params": { "nativeCurrencyAddress": "0x0000000000000000000000000000000000000000" }
+          },
+          { "label": "Duration", "format": "duration", "path": "#._duration" }
+        ],
+        "required": ["#._kittyId", "#._startingPrice", "#._endingPrice", "#._duration"],
+        "excluded": []
+      },
+      "approveSiring(address,uint256)": {
+        "intent": "approve CryptoKitty for breeding",
+        "fields": [
+          {
+            "label": "Approved Address",
+            "format": "addressName",
+            "params": { "types": ["eoa", "wallet", "contract"], "sources": ["local", "ens"] },
+            "path": "#._addr"
+          },
+          { "label": "Sire Kitty ID", "format": "raw", "path": "#._sireId" }
+        ],
+        "required": ["#._addr", "#._sireId"],
+        "excluded": []
+      },
+      "bidOnSiringAuction(uint256,uint256)": {
+        "intent": "bid on breeding auction",
+        "fields": [
+          { "label": "Sire Kitty ID", "format": "raw", "path": "#._sireId" },
+          { "label": "Matron Kitty ID", "format": "raw", "path": "#._matronId" },
+          {
+            "label": "Bid Amount",
+            "format": "tokenAmount",
+            "path": "@.value",
+            "params": { "nativeCurrencyAddress": "0x0000000000000000000000000000000000000000" }
+          }
+        ],
+        "required": ["#._sireId", "#._matronId", "@.value"],
+        "excluded": []
+      },
+      "breedWithAuto(uint256,uint256)": {
+        "intent": "breed CryptoKitties with auto-birth",
+        "fields": [
+          { "label": "Matron Kitty ID", "format": "raw", "path": "#._matronId" },
+          { "label": "Sire Kitty ID", "format": "raw", "path": "#._sireId" },
+          {
+            "label": "Auto-birth Fee",
+            "format": "tokenAmount",
+            "path": "@.value",
+            "params": { "nativeCurrencyAddress": "0x0000000000000000000000000000000000000000" }
+          }
+        ],
+        "required": ["#._matronId", "#._sireId", "@.value"],
+        "excluded": []
+      },
+      "giveBirth(uint256)": {
+        "intent": "deliver new CryptoKitty",
+        "fields": [{ "label": "Matron Kitty ID", "format": "raw", "path": "#._matronId" }],
+        "required": ["#._matronId"],
+        "excluded": []
+      }
+    }
+  }
+}
